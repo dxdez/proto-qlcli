@@ -1,10 +1,12 @@
 import configparser
+import json
 from pathlib import Path
+from typing import Any, Dict, List, NamedTuple
 
-from qklist import DB_WRITE_ERROR, SUCCESS
+from qklist import DB_READ_ERROR, DB_WRITE_ERROR, JSON_ERROR, SUCCESS
 
 DEFAULT_DB_FILE_PATH = Path.home().joinpath(
-    "." + Path.home().stem + "_todo.json"
+    "." + Path.home().stem + "_qklist.json"
 )
 
 def get_database_path(config_file: Path) -> Path:
@@ -18,3 +20,29 @@ def init_database(db_path: Path) -> int:
         return SUCCESS
     except OSError:
         return DB_WRITE_ERROR
+
+class DBResponse(NamedTuple):
+    qk_list: List[Dict[str, Any]]
+    error: int
+
+class DatabaseHandler:
+    def __init__(self, db_path: Path) -> None:
+        self._db_path = db_path
+
+    def read_qklists(self) -> DBResponse:
+        try:
+            with self._db_path.open("r") as db:
+                try:
+                    return DBResponse(json.load(db), SUCCESS)
+                except json.JSONDecodeError:  # Catch wrong JSON format
+                    return DBResponse([], JSON_ERROR)
+        except OSError:  # Catch file IO problems
+            return DBResponse([], DB_READ_ERROR)
+
+    def write_qklists(self, qk_list: List[Dict[str, Any]]) -> DBResponse:
+        try:
+            with self._db_path.open("w") as db:
+                json.dump(qk_list, db, indent=4)
+            return DBResponse(qk_list, SUCCESS)
+        except OSError:  # Catch file IO problems
+            return DBResponse(qk_list, DB_WRITE_ERROR)
