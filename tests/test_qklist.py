@@ -27,19 +27,19 @@ def mock_json_file(tmp_path):
     return db_file
 
 test_data1 = {
-    "description": ["Clean", "the", "car"],
+    "description": ["Clean", "the", "house"],
     "priority": 1,
     "qklistitem": {
-        "Description": "Clean the car",
+        "Description": "Clean the house.",
         "Priority": 1,
         "Done": False,
     },
 }
 test_data2 = {
-    "description": ["Organize the fridge"],
+    "description": ["Wash the car"],
     "priority": 2,
     "qklistitem": {
-        "Description": "Organize the fridge",
+        "Description": "Wash the car.",
         "Priority": 2,
         "Done": False,
     },
