@@ -28,3 +28,8 @@ class QkListObj:
         read.qk_list.append(qklistitem)
         write = self._db_handler.write_qklists(read.qk_list)
         return CurrentListItem(qklistitem, write.error)
+
+    def get_qklist_items(self) -> List[Dict[str, Any]]:
+        """Return the current to-do list."""
+        read = self._db_handler.read_qklists()
+        return read.qk_list
