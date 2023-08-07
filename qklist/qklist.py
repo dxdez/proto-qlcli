@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any, Dict, List, NamedTuple
 
-from qklist import DB_READ_ERROR
+from qklist import DB_READ_ERROR, ID_ERROR
 from qklist.database import DatabaseHandler
 
 class CurrentListItem(NamedTuple):
@@ -18,10 +18,10 @@ class QkListObj:
         if not description_text.endswith("."):
             description_text += "."
         qklistitem = {
-            "Description": description_text,
-            "Priority": priority,
-            "Done": False,
-        }
+                "Description": description_text,
+                "Priority": priority,
+                "Done": False,
+                }
         read = self._db_handler.read_qklists()
         if read.error == DB_READ_ERROR:
             return CurrentListItem(qklistitem, read.error)
@@ -33,3 +33,16 @@ class QkListObj:
         """Return the current to-do list."""
         read = self._db_handler.read_qklists()
         return read.qk_list
+
+    def set_done(self, qklist_id: int) -> CurrentListItem:
+        """Set a to-do as done."""
+        read = self._db_handler.read_qklists()
+        if read.error:
+            return CurrentListItem({}, read.error)
+        try:
+            qklist = read.qk_list[qklist_id - 1]
+        except IndexError:
+            return CurrentListItem({}, ID_ERROR)
+        qklist["Done"] = True
+        write = self._db_handler.write_qklists(read.qk_list)
+        return CurrentListItem(qklist, write.error)
