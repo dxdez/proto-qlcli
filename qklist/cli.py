@@ -108,7 +108,7 @@ def list_all() -> None:
 
 @app.command(name="complete")
 def set_done(qklist_id: int = typer.Argument(...)) -> None:
-    """Complete a list item by setting it as done using its TODO_ID."""
+    """Complete a list item by setting it as done using its id number."""
     current_qklist = get_qklist()
     qklist_item, error = current_qklist.set_done(qklist_id)
     if error:
@@ -122,7 +122,52 @@ def set_done(qklist_id: int = typer.Argument(...)) -> None:
                 f"""list item # {qklist_id} "{qklist_item['Description']}" completed!""",
                 fg=typer.colors.GREEN,
                 )
-                
+          
+
+@app.command()
+def remove(
+    listitem_id: int = typer.Argument(...),
+    force: bool = typer.Option(
+        False,
+        "--force",
+        "-f",
+        help="Force deletion without confirmation.",
+    ),
+) -> None:
+    """Remove a list item using its id number."""
+    current_qklist = get_qklist()
+
+    def _remove():
+        qklist_item, error = current_qklist.remove(listitem_id)
+        if error:
+            typer.secho(
+                f'Removing list item # {listitem_id} failed with "{ERRORS[error]}"',
+                fg=typer.colors.RED,
+            )
+            raise typer.Exit(1)
+        else:
+            typer.secho(
+                f"""list item # {listitem_id}: '{qklist_item["Description"]}' was removed""",
+                fg=typer.colors.GREEN,
+            )
+
+    if force:
+        _remove()
+    else:
+        qk_list = current_qklist.get_qklist_items()
+        try:
+            qklist_item = qk_list[listitem_id - 1]
+        except IndexError:
+            typer.secho("Invalid id number", fg=typer.colors.RED)
+            raise typer.Exit(1)
+        delete = typer.confirm(
+            f"Delete list item # {listitem_id}: {qklist_item['Description']}?"
+        )
+        if delete:
+            _remove()
+        else:
+            typer.echo("Operation canceled")
+
 
 def _version_callback(value: bool) -> None:
     if value:
