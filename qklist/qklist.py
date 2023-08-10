@@ -58,3 +58,8 @@ class QkListObj:
             return CurrentListItem({}, ID_ERROR)
         write = self._db_handler.write_qklists(read.qk_list)
         return CurrentListItem(qklist, write.error)
+
+    def remove_all(self) -> CurrentListItem:
+        """Remove all list items from the database."""
+        write = self._db_handler.write_qklists([])
+        return CurrentListItem({}, write.error)
