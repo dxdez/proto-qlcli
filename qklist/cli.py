@@ -169,6 +169,30 @@ def remove(
             typer.echo("Operation canceled")
 
 
+@app.command(name="clear")
+def remove_all(
+    force: bool = typer.Option(
+        ...,
+        prompt="Delete all list items?",
+        help="Force deletion without confirmation.",
+    ),
+) -> None:
+    """Remove all list items."""
+    current_qklist = get_qklist()
+    if force:
+        error = current_qklist.remove_all().error
+        if error:
+            typer.secho(
+                f'Removing list items failed with "{ERRORS[error]}"',
+                fg=typer.colors.RED,
+            )
+            raise typer.Exit(1)
+        else:
+            typer.secho("All list items were removed", fg=typer.colors.GREEN)
+    else:
+        typer.echo("Operation canceled")
+
+
 def _version_callback(value: bool) -> None:
     if value:
         typer.echo(f"{__app_name__} v{__version__}")
