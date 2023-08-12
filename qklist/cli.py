@@ -3,9 +3,7 @@ from typing import List, Optional
 
 import typer
 
-from qklist import (
-        ERRORS, __app_name__, __version__, config, database, qklist
-        )
+from qklist import (ERRORS, __app_name__, __version__, config, database, qklist)
 
 app = typer.Typer()
 
@@ -54,6 +52,7 @@ def get_qklist() -> qklist.QkListObj:
                 )
         raise typer.Exit(1)
 
+
 @app.command()
 def add(
         description: List[str] = typer.Argument(...),
@@ -74,35 +73,36 @@ def add(
                 fg=typer.colors.GREEN,
                 )
 
+
 @app.command(name="list")
 def list_all() -> None:
-    """List all quick list items."""
+    """Show all list items."""
     current_qklist = get_qklist()
     qklist_items = current_qklist.get_qklist_items()
     if len(qklist_items) == 0:
         typer.secho(
-            "There are no tasks in quick list", fg=typer.colors.RED
-        )
+                "There are no items in quick list", fg=typer.colors.RED
+                )
         raise typer.Exit()
     typer.secho("\nitem list:\n", fg=typer.colors.BLUE, bold=True)
     columns = (
-        "ID.  ",
-        "| Priority  ",
-        "| Done  ",
-        "| Description  ",
-    )
+            "ID.  ",
+            "| Priority  ",
+            "| Done  ",
+            "| Description  ",
+            )
     headers = "".join(columns)
     typer.secho(headers, fg=typer.colors.BLUE, bold=True)
     typer.secho("-" * len(headers), fg=typer.colors.BLUE)
     for id, list_item in enumerate(qklist_items, 1):
         desc, priority, done = list_item.values()
         typer.secho(
-            f"{id}{(len(columns[0]) - len(str(id))) * ' '}"
-            f"| ({priority}){(len(columns[1]) - len(str(priority)) - 4) * ' '}"
-            f"| {done}{(len(columns[2]) - len(str(done)) - 2) * ' '}"
-            f"| {desc}",
-            fg=typer.colors.BLUE,
-        )
+                f"{id}{(len(columns[0]) - len(str(id))) * ' '}"
+                f"| ({priority}){(len(columns[1]) - len(str(priority)) - 4) * ' '}"
+                f"| {done}{(len(columns[2]) - len(str(done)) - 2) * ' '}"
+                f"| {desc}",
+                fg=typer.colors.BLUE,
+                )
     typer.secho("-" * len(headers) + "\n", fg=typer.colors.BLUE)
 
 
@@ -122,18 +122,18 @@ def set_done(qklist_id: int = typer.Argument(...)) -> None:
                 f"""list item # {qklist_id} "{qklist_item['Description']}" completed!""",
                 fg=typer.colors.GREEN,
                 )
-          
+
 
 @app.command()
 def remove(
-    listitem_id: int = typer.Argument(...),
-    force: bool = typer.Option(
-        False,
-        "--force",
-        "-f",
-        help="Force deletion without confirmation.",
-    ),
-) -> None:
+        listitem_id: int = typer.Argument(...),
+        force: bool = typer.Option(
+            False,
+            "--force",
+            "-f",
+            help="Force deletion without confirmation.",
+            ),
+        ) -> None:
     """Remove a list item using its id number."""
     current_qklist = get_qklist()
 
@@ -141,15 +141,15 @@ def remove(
         qklist_item, error = current_qklist.remove(listitem_id)
         if error:
             typer.secho(
-                f'Removing list item # {listitem_id} failed with "{ERRORS[error]}"',
-                fg=typer.colors.RED,
-            )
+                    f'Removing list item # {listitem_id} failed with "{ERRORS[error]}"',
+                    fg=typer.colors.RED,
+                    )
             raise typer.Exit(1)
         else:
             typer.secho(
-                f"""list item # {listitem_id}: '{qklist_item["Description"]}' was removed""",
-                fg=typer.colors.GREEN,
-            )
+                    f"""list item # {listitem_id}: '{qklist_item["Description"]}' was removed""",
+                    fg=typer.colors.GREEN,
+                    )
 
     if force:
         _remove()
@@ -161,8 +161,8 @@ def remove(
             typer.secho("Invalid id number", fg=typer.colors.RED)
             raise typer.Exit(1)
         delete = typer.confirm(
-            f"Delete list item # {listitem_id}: {qklist_item['Description']}?"
-        )
+                f"Delete list item # {listitem_id}: {qklist_item['Description']}?"
+                )
         if delete:
             _remove()
         else:
@@ -171,21 +171,21 @@ def remove(
 
 @app.command(name="clear")
 def remove_all(
-    force: bool = typer.Option(
-        ...,
-        prompt="Delete all list items?",
-        help="Force deletion without confirmation.",
-    ),
-) -> None:
+        force: bool = typer.Option(
+            ...,
+            prompt="Delete all list items?",
+            help="Force deletion without confirmation.",
+            ),
+        ) -> None:
     """Remove all list items."""
     current_qklist = get_qklist()
     if force:
         error = current_qklist.remove_all().error
         if error:
             typer.secho(
-                f'Removing list items failed with "{ERRORS[error]}"',
-                fg=typer.colors.RED,
-            )
+                    f'Removing list items failed with "{ERRORS[error]}"',
+                    fg=typer.colors.RED,
+                    )
             raise typer.Exit(1)
         else:
             typer.secho("All list items were removed", fg=typer.colors.GREEN)
@@ -205,7 +205,7 @@ def main(
             None,
             "--version",
             "-v",
-            help="Show the application's version and exit.",
+            help="Show the version of the application and exit.",
             callback=_version_callback,
             is_eager=True,
             )
