@@ -8,9 +8,11 @@ class CurrentListItem(NamedTuple):
     listItem: Dict[str, Any]
     error: int
 
+
 class QkListObj:
     def __init__(self, db_path: Path) -> None:
         self._db_handler = DatabaseHandler(db_path)
+
 
     def add(self, description: List[str], priority: int = 2) -> CurrentListItem:
         """Add a new list item to the database."""
@@ -29,10 +31,12 @@ class QkListObj:
         write = self._db_handler.write_qklists(read.qk_list)
         return CurrentListItem(qklistitem, write.error)
 
+
     def get_qklist_items(self) -> List[Dict[str, Any]]:
         """Return the current list item list."""
         read = self._db_handler.read_qklists()
         return read.qk_list
+
 
     def set_done(self, qklist_id: int) -> CurrentListItem:
         """Set a list item as done."""
@@ -47,6 +51,7 @@ class QkListObj:
         write = self._db_handler.write_qklists(read.qk_list)
         return CurrentListItem(qklist, write.error)
 
+
     def remove(self, qklist_id: int) -> CurrentListItem:
         """Remove a list item from the database using its id or index."""
         read = self._db_handler.read_qklists()
@@ -58,6 +63,7 @@ class QkListObj:
             return CurrentListItem({}, ID_ERROR)
         write = self._db_handler.write_qklists(read.qk_list)
         return CurrentListItem(qklist, write.error)
+
 
     def remove_all(self) -> CurrentListItem:
         """Remove all list items from the database."""

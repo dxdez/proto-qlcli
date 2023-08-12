@@ -6,8 +6,8 @@ from typing import Any, Dict, List, NamedTuple
 from qklist import DB_READ_ERROR, DB_WRITE_ERROR, JSON_ERROR, SUCCESS
 
 DEFAULT_DB_FILE_PATH = Path.home().joinpath(
-    "." + Path.home().stem + "_qklist.json"
-)
+        "." + Path.home().stem + "_qklist.json"
+        )
 
 def get_database_path(config_file: Path) -> Path:
     config_parser = configparser.ConfigParser()
