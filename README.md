@@ -5,7 +5,7 @@ Quick List is a command-line interface (CLI) tool that allows users to manage an
 #### init:
 Command: 
 ```
-quicklist-cli init
+qklist init
 ```
 Purpose: Initializes the configuration and database for the quicklist.<br/>
 Parameters: `--db-path` (optional) - Specifies the database file path.<br/>
@@ -15,7 +15,7 @@ Functionality: Creates a configuration file and initializes a database for the q
 #### add:
 Command: 
 ```
-quicklist-cli add "Description of the task"
+qklist add "Description of the task"
 ```
 Purpose: Adds a new item to the to-do list.<br/>
 Parameters: `--priority` (optional) - Specifies the priority level of the task (1 to 3).<br/>
@@ -25,7 +25,7 @@ Functionality: Adds a new item to the to-do list with the specified description 
 #### list:
 Command: 
 ```
-quicklist-cli list
+qklist list
 ```
 Purpose: Lists all items in the to-do list.<br/>
 Functionality: Retrieves all items from the to-do list and displays them with their IDs, priorities, completion status, and descriptions.
@@ -34,7 +34,7 @@ Functionality: Retrieves all items from the to-do list and displays them with th
 #### complete:
 Command: 
 ```
-quicklist-cli complete <item_id>
+qklist complete <item_id>
 ```
 Purpose: Marks a specific item as completed.<br/>
 Functionality: Sets the completion status of the specified item to "done."
@@ -43,7 +43,7 @@ Functionality: Sets the completion status of the specified item to "done."
 #### remove:
 Command: 
 ```
-quicklist-cli remove <item_id>
+qklist remove <item_id>
 ```
 Purpose: Removes a specific item from the to-do list.<br/>
 Parameters: `--force` (optional) - Forces deletion without confirmation.<br/>
@@ -53,7 +53,7 @@ Functionality: Removes the specified item from the to-do list. If not forced, as
 #### clear:
 Command: 
 ```
-quicklist-cli clear
+qklist clear
 ```
 Purpose: Removes all items from the to-do list.<br/>
 Parameters: `--force `- Forces deletion without confirmation.<br/>
@@ -74,13 +74,13 @@ Each command corresponds to a specific action that can be performed on the to-do
 
 To use this application, users would run the script with the appropriate commands and parameters in their terminal. For example:
 
-- `quicklist-cli init`
-- `quicklist-cli add "Buy groceries" --priority 2`
-- `quicklist-cli list`
-- `quicklist-cli complete 1`
-- `quicklist-cli remove 2 --force`
-- `quicklist-cli clear`
-- `quicklist-cli --version`
+- `qklist init`
+- `qklist add "Buy groceries" --priority 2`
+- `qklist list`
+- `qklist complete 1`
+- `qklist remove 2 --force`
+- `qklist clear`
+- `qklist --version`
 
 Ensure that you have the necessary imports and dependencies installed to use this application successfully. You can extend and customize the functionality of your CLI tool further based on your requirements.
 
