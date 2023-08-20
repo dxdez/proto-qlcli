@@ -16,6 +16,7 @@ def init(
             prompt="Enter qklist database location. Type a path or press enter to confirm default",
             ),
         ) -> None:
+    """Initializes the setup for quick list items"""
     app_init_error = config.init_app(db_path)
     if app_init_error:
         typer.secho(
@@ -106,9 +107,9 @@ def list_all() -> None:
     typer.secho("-" * len(headers) + "\n", fg=typer.colors.BLUE)
 
 
-@app.command(name="complete")
+@app.command(name="mark")
 def set_done(qklist_id: int = typer.Argument(...)) -> None:
-    """Complete a list item by setting it as done using its id number."""
+    """Mark a list item as done by its id number."""
     current_qklist = get_qklist()
     qklist_item, error = current_qklist.set_done(qklist_id)
     if error:
@@ -124,7 +125,7 @@ def set_done(qklist_id: int = typer.Argument(...)) -> None:
                 )
 
 
-@app.command()
+@app.command(name="pull")
 def remove(
         listitem_id: int = typer.Argument(...),
         force: bool = typer.Option(
@@ -169,7 +170,7 @@ def remove(
             typer.echo("Operation canceled")
 
 
-@app.command(name="clear")
+@app.command(name="empty")
 def remove_all(
         force: bool = typer.Option(
             ...,
@@ -177,7 +178,7 @@ def remove_all(
             help="Force deletion without confirmation.",
             ),
         ) -> None:
-    """Remove all list items."""
+    """Empty the list by removing all items."""
     current_qklist = get_qklist()
     if force:
         error = current_qklist.remove_all().error
