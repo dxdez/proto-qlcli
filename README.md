@@ -8,7 +8,7 @@ Command:
 qklist init
 ```
 Purpose: Initializes the configuration and database for the quicklist.<br/>
-Parameters: `--db-path` (optional) - Specifies the database file path.<br/>
+Parameters: `--db-path`; Specifies the database file path.<br/>
 Functionality: Creates a configuration file and initializes a database for the quicklist.
 
 &nbsp;
@@ -18,7 +18,7 @@ Command:
 qklist add "Description of the task"
 ```
 Purpose: Adds a new item to the to-do list.<br/>
-Parameters: `--priority` (optional) - Specifies the priority level of the task (1 to 3).<br/>
+Parameters: `--priority`; Specifies the priority level of the task (1 to 3).<br/>
 Functionality: Adds a new item to the to-do list with the specified description and priority.
 
 &nbsp;
@@ -34,7 +34,7 @@ Functionality: Retrieves all items from the to-do list and displays them with th
 #### complete:
 Command: 
 ```
-qklist complete <item_id>
+qklist mark <item_id>
 ```
 Purpose: Marks a specific item as completed.<br/>
 Functionality: Sets the completion status of the specified item to "done."
@@ -43,17 +43,17 @@ Functionality: Sets the completion status of the specified item to "done."
 #### remove:
 Command: 
 ```
-qklist remove <item_id>
+qklist pull <item_id>
 ```
 Purpose: Removes a specific item from the to-do list.<br/>
-Parameters: `--force` (optional) - Forces deletion without confirmation.<br/>
+Parameters: `--force`; Forces deletion without confirmation.<br/>
 Functionality: Removes the specified item from the to-do list. If not forced, asks for confirmation.
 
 &nbsp;
 #### clear:
 Command: 
 ```
-qklist clear
+qklist empty
 ```
 Purpose: Removes all items from the to-do list.<br/>
 Parameters: `--force `- Forces deletion without confirmation.<br/>
@@ -77,9 +77,9 @@ To use this application, users would run the script with the appropriate command
 - `qklist init`
 - `qklist add "Buy groceries" --priority 2`
 - `qklist list`
-- `qklist complete 1`
-- `qklist remove 2 --force`
-- `qklist clear`
+- `qklist mark 1`
+- `qklist pull 2 --force`
+- `qklist empty`
 - `qklist --version`
 
 Ensure that you have the necessary imports and dependencies installed to use this application successfully. You can extend and customize the functionality of your CLI tool further based on your requirements.
