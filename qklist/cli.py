@@ -70,7 +70,7 @@ def add(
     else:
         typer.secho(
                 f"""item: "{qklist_item['Description']}" was added """
-                f"""with priority: {priority}""",
+                f"""with a priority value of {priority}""",
                 fg=typer.colors.GREEN,
                 )
 
@@ -88,23 +88,24 @@ def list_all() -> None:
     typer.secho("\nitem list:\n", fg=typer.colors.BLUE, bold=True)
     columns = (
             "ID.  ",
-            "| Priority  ",
+            "| Priority    ",
             "| Done  ",
             "| Description  ",
             )
     headers = "".join(columns)
     typer.secho(headers, fg=typer.colors.BLUE, bold=True)
-    typer.secho("-" * len(headers), fg=typer.colors.BLUE)
+    typer.secho("=" * len(headers), fg=typer.colors.BLUE)
     for id, list_item in enumerate(qklist_items, 1):
         desc, priority, done = list_item.values()
+        priority_value = 'High' if priority == 3 else 'Low' if priority == 1 else 'Normal'
         typer.secho(
                 f"{id}{(len(columns[0]) - len(str(id))) * ' '}"
-                f"| ({priority}){(len(columns[1]) - len(str(priority)) - 4) * ' '}"
+                f"| ({priority}) {priority_value}{(len(columns[1]) - len(str(priority)) - len(str(priority_value)) - 5) * ' '}"
                 f"| {done}{(len(columns[2]) - len(str(done)) - 2) * ' '}"
                 f"| {desc}",
                 fg=typer.colors.BLUE,
                 )
-    typer.secho("-" * len(headers) + "\n", fg=typer.colors.BLUE)
+    typer.secho("=" * len(headers) + "\n", fg=typer.colors.BLUE)
 
 
 @app.command(name="mark")
@@ -198,7 +199,6 @@ def _version_callback(value: bool) -> None:
     if value:
         typer.echo(f"{__app_name__} v{__version__}")
         raise typer.Exit()
-
 
 @app.callback()
 def main(
