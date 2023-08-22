@@ -5,25 +5,27 @@ from typing import Any, Dict, List, NamedTuple
 
 from qklist import DB_READ_ERROR, DB_WRITE_ERROR, JSON_ERROR, SUCCESS
 
-DEFAULT_DB_FILE_PATH = Path.home().joinpath(
-        "." + Path.home().stem + "_qklist.json"
-        )
+DEFAULT_DB_FILE_PATH = Path.home().joinpath("." + Path.home().stem + "_qklist.json")
+
 
 def get_database_path(config_file: Path) -> Path:
     config_parser = configparser.ConfigParser()
     config_parser.read(config_file)
     return Path(config_parser["General"]["database"])
 
+
 def init_database(db_path: Path) -> int:
     try:
-        db_path.write_text("[]")  #Empty list
+        db_path.write_text("[]")  # Empty list
         return SUCCESS
     except OSError:
         return DB_WRITE_ERROR
 
+
 class DBResponse(NamedTuple):
     qk_list: List[Dict[str, Any]]
     error: int
+
 
 class DatabaseHandler:
     def __init__(self, db_path: Path) -> None:
@@ -46,3 +48,4 @@ class DatabaseHandler:
             return DBResponse(qk_list, SUCCESS)
         except OSError:  # Catch file IO problems
             return DBResponse(qk_list, DB_WRITE_ERROR)
+
