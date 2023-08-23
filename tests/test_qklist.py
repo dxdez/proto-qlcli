@@ -13,6 +13,7 @@ from qklist import (
 
 runner = CliRunner()
 
+
 def test_version():
     result = runner.invoke(cli.app, ["--version"])
     assert result.exit_code == 0
@@ -68,3 +69,4 @@ def test_add(mock_json_file, description, priority, expected):
     assert qklistobj.add(description, priority) == expected
     read = qklistobj._db_handler.read_qklists()
     assert len(read.qk_list) == 2
+
