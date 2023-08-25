@@ -31,7 +31,7 @@ Purpose: Lists all items in the to-do list.<br/>
 Functionality: Retrieves all items from the to-do list and displays them with their IDs, priorities, completion status, and descriptions.
 
 &nbsp;
-#### complete:
+#### mark:
 Command: 
 ```
 qklist mark <item_id>
@@ -40,7 +40,7 @@ Purpose: Marks a specific item as completed.<br/>
 Functionality: Sets the completion status of the specified item to "done."
 
 &nbsp;
-#### remove:
+#### pull:
 Command: 
 ```
 qklist pull <item_id>
@@ -50,7 +50,7 @@ Parameters: `--force`; Forces deletion without confirmation.<br/>
 Functionality: Removes the specified item from the to-do list. If not forced, asks for confirmation.
 
 &nbsp;
-#### clear:
+#### empty:
 Command: 
 ```
 qklist empty
