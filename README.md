@@ -75,7 +75,7 @@ Ensure that you have the necessary imports and dependencies installed to use thi
 ## Using the Virtual Enviornment
 
 When cloning the project it is important to establish the virtual environment before starting. The reason for this is so that the dependencies that are installed from the requirements.txt field are not in conflict with your existing Python configurations. 
-<br>
+
 To create a new virtual environment, run the following command:
 ```
 python -m venv venv
