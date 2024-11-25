@@ -2,7 +2,7 @@
 
 > **Note: This project is no longer actively maintained. It has been archived for historical purposes. Feel free to explore the code, but please note that it is no longer in use or supported.**
 
-Quick List is a command-line interface (CLI) tool that allows users to manage and interact with a to-do list. It uses the Typer library for creating the CLI interface. Here's an overview of the basic commands and functionality of the application:
+Quick List is a command-line interface (CLI) tool that allows users to manage and interact with a task list. It uses the Typer library for creating the CLI interface. Here's an overview of the basic commands and functionality of the application:
 
 ## Commands
 
